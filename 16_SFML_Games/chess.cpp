@@ -7,7 +7,7 @@ int size = 56;
 Vector2f os(28,28);
 
 Sprite f[32]; //figures
-std::string position="";
+std::string position=""; // Keeps track of the sequence of moves in standard algebraic notation
 
 int board[8][8] = 
     {-1,-2,-3,-4,-5,-3,-2,-1,
@@ -19,11 +19,12 @@ int board[8][8] =
       6, 6, 6, 6, 6, 6, 6, 6,
       1, 2, 3, 4, 5, 3, 2, 1};
 
+// Converts a position from screen coordinates to chess notation (e.g., (0,0) -> "a8")
 std::string toChessNote(Vector2f p)
 {
   std::string s = "";
-  s += char(p.x/size+97);
-  s += char(7-p.y/size+49);
+  s += char(p.x/size+97);  // Convert the x-coordinate to the corresponding letter (a-h)
+  s += char(7-p.y/size+49);  // Convert the y-coordinate to the corresponding number (1-8)
   return s;
 }
 
@@ -52,6 +53,7 @@ void move(std::string str)
     if (str=="e8c8") if (position.find("e8")==-1) move("a8d8");
 }
 
+// Loads the chess pieces to the board based on the initial state and previous moves
 void loadPosition()
 {
     int k=0;
@@ -127,13 +129,13 @@ int chess()
              if (e.type == Event::MouseButtonReleased)
                 if (e.key.code == Mouse::Left)
                  {
-                  isMove=false;
-                  Vector2f p = f[n].getPosition() + Vector2f(size/2,size/2);
-                  newPos = Vector2f( size*int(p.x/size), size*int(p.y/size) );
-                  str = toChessNote(oldPos)+toChessNote(newPos);
-                  move(str); 
-                  if (oldPos!=newPos) position+=str+" ";
-                  f[n].setPosition(newPos);                   
+                    isMove = false;  // Stop dragging the piece
+                    Vector2f p = f[n].getPosition()+Vector2f(size/2,size/2);  // Get the center of the puece
+                    newPos = Vector2f(size*int(p.x/size),size*int(p.y/size));  // Snap to nearest square
+                    str = toChessNote(oldPos) + toChessNote(newPos);  // Create move string (e.g., "e2e4")
+                    move(str);  // Execute the move
+                    if (oldPos!=newPos) position+=str+" ";  // Add move to history if it's valid
+                    f[n].setPosition(newPos);  // Move the piece visually
                  }                       
         }
 

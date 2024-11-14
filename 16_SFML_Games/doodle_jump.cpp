@@ -23,7 +23,7 @@ int doodle_jump()
 
     for (int i=0;i<10;i++)
       {
-       plat[i].x=rand()%400;
+       plat[i].x=rand()%400; 
        plat[i].y=rand()%533;
       }
 
@@ -39,8 +39,8 @@ int doodle_jump()
                 app.close();
         }
 
-    if (Keyboard::isKeyPressed(Keyboard::Right)) x+=3;
-    if (Keyboard::isKeyPressed(Keyboard::Left)) x-=3;
+    if (Keyboard::isKeyPressed(Keyboard::Right)) x+=3; // Move right
+    if (Keyboard::isKeyPressed(Keyboard::Left)) x-=3; // Move left
 
     dy+=0.2;
     y+=dy;
@@ -49,9 +49,11 @@ int doodle_jump()
     if (y<h)
     for (int i=0;i<10;i++)
     {
-      y=h;
-      plat[i].y=plat[i].y-dy;
-      if (plat[i].y>533) {plat[i].y=0; plat[i].x=rand()%400;}
+      y=h; // Reset player position to the height limit
+      plat[i].y=plat[i].y-dy; // Move platform upward
+      if (plat[i].y>533) { // If platform moves off screen
+          plat[i].y=0; // Reset platform to top of screen
+          plat[i].x=rand()%400;} // Randomize platform x position
     }
 
     for (int i=0;i<10;i++)

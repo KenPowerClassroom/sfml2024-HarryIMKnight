@@ -4,7 +4,7 @@ using namespace sf;
 
 int arkanoid()
 {
-    srand(time(0));
+    srand(time(0));  // Initialize random number generator for ball movement
 
     RenderWindow app(VideoMode(520, 450), "Arkanoid!");
     app.setFramerateLimit(60);
@@ -29,8 +29,8 @@ int arkanoid()
          n++;
       }
 
-    float dx=6, dy=5;
-    float x=300, y=300;
+    float dx=6, dy=5; // Set initial ball speed
+    float x=300, y=300; // Set initial ball position
 
     while (app.isOpen())
     {
@@ -43,16 +43,16 @@ int arkanoid()
 
     x+=dx;
     for (int i=0;i<n;i++)
-        if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) ) 
-             {block[i].setPosition(-100,0); dx=-dx;}
+        if (FloatRect(x + 3, y + 3, 6, 6).intersects(block[i].getGlobalBounds()))
+        {block[i].setPosition(-100, 0); dx = -dx;} // Reverse the horizontal direction of the ball
 
     y+=dy;
     for (int i=0;i<n;i++)
         if ( FloatRect(x+3,y+3,6,6).intersects(block[i].getGlobalBounds()) ) 
-             {block[i].setPosition(-100,0); dy=-dy;}
+             {block[i].setPosition(-100,0); dy=-dy;} // Reverse the vertical direction of the ball
 
-    if (x<0 || x>520)  dx=-dx;
-    if (y<0 || y>450)  dy=-dy;
+    if (x<0 || x>520)  dx=-dx; // Reverse ball direction if it hits the sides
+    if (y<0 || y>450)  dy=-dy; // Reverse ball direction if it hits the top or bottom
 
     if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6,0);
     if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6,0);
