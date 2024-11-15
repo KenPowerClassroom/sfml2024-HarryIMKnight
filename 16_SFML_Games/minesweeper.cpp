@@ -1,3 +1,4 @@
+//Harry Knight
 #include <SFML/Graphics.hpp>
 #include <time.h>
 using namespace sf;
@@ -12,9 +13,9 @@ int minesweeper()
     int grid[12][12];
     int sgrid[12][12]; //for showing
 
-    Texture t;
-    t.loadFromFile("images/minesweeper/tiles.jpg");
-    Sprite s(t);
+    Texture tilesTexture; // Refactor: I changed the varible name from t to tilesTexture to specify what the varible holds
+    tilesTexture.loadFromFile("images/minesweeper/tiles.jpg"); 
+    Sprite s(tilesTexture);
 
     for (int i=1;i<=10;i++)
      for (int j=1;j<=10;j++)
