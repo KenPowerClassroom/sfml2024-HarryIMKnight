@@ -3,6 +3,8 @@
 #include <time.h>
 using namespace sf;
 
+const int MINE_CHANCE = 5;
+
 //Refactor 3: added more comments
 int minesweeper()
 {
